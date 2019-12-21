@@ -1,10 +1,37 @@
-<p>countries works!</p>
+<p class="lead text-center">Graphql Example</p>
 
-<span *ngFor="let country of data.countries | async ">
-    {{country }}
-</span>
-<!-- <span *ngFor="let country of countries; let i = index">
-    {{country.code}}
-</span> -->
 
-{{data | async | json}}
+<span *ngIf="loading"> loading ... </span>
+
+<table class="table table-hover table-stripped" *ngIf="!loading">
+  <thead>
+    <tr>
+      <th scope="col" >S.No</th>
+      <th scope="col" sortable="code" (sort)="onSort($event)">Code</th>
+      <th scope="col" sortable="name" (sort)="onSort($event)">Name</th>
+      <th scope="col" sortable="phone" (sort)="onSort($event)">Phone</th>
+      <th scope="col" sortable="currency" (sort)="onSort($event)">Currency</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr  *ngFor="let country of countrys ; let i = index">
+      <td>{{country.id}}</td>
+      <td>{{country.code}}</td>
+      <td>{{country.name}}</td>
+      <td>{{country.phone}}</td>
+      <td>{{country.currency}}</td>
+    </tr>
+  </tbody>
+
+</table>
+
+<div class="d-flex justify-content-between p-2">
+    <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+    </ngb-pagination>
+
+    <select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
+      <option [ngValue]="5">5 items per page</option>
+      <option [ngValue]="10">10 items per page</option>
+      <option [ngValue]="20">20 items per page</option>
+    </select>
+  </div>

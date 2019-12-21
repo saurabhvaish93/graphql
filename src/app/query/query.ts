@@ -2,7 +2,11 @@ import { Country } from './../dto/country';
 import { Language } from './../dto/language';
 import { Apollo, QueryRef } from 'apollo-angular';
 import gql from 'graphql-tag';
+import { Injectable } from '@angular/core';
 
+@Injectable({
+  "providedIn": "root"
+})
 export class Query {
 
     constructor(private apollo: Apollo) { }
@@ -61,11 +65,11 @@ export class Query {
 
 
     // get countries
-    getCountries(): QueryRef<Country> {
+    getCountries(): QueryRef<any> {
 
-        return this.apollo.watchQuery<Country>({
+        return this.apollo.watchQuery<any>({
             query: gql`{
-                 country(){
+                 countries{
                     code
                     name
                     native
