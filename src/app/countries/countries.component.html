@@ -1,0 +1,10 @@
+<p>countries works!</p>
+
+<span *ngFor="let country of data.countries | async ">
+    {{country }}
+</span>
+<!-- <span *ngFor="let country of countries; let i = index">
+    {{country.code}}
+</span> -->
+
+{{data | async | json}}
