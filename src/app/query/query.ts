@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  "providedIn": "root"
+  'providedIn': 'root'
 })
 export class Query {
 
@@ -45,20 +45,20 @@ export class Query {
 
 
     // get language
-    getCountry(ccode: string): QueryRef<Country> {
-
-        return this.apollo.watchQuery<Country>({
-            query: gql`{
-                 country($code: String){
+    getCountry(countryCode: string): QueryRef<any> {
+        return this.apollo.watchQuery<any>({
+            query: gql`
+              query getCountry($ccode: String){
+                 country(code: $ccode){
                     code
                     name
                     native
                     phone
                     currency
                    }
-             }`,
+            }`,
             variables: {
-                code: ccode
+                "ccode": countryCode
             }
         });
     }
