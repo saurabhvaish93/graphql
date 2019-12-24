@@ -12,18 +12,19 @@ export class Query {
     constructor(private apollo: Apollo) { }
 
     // get language
-    getLanguage(lcode: string): QueryRef<Language> {
+    getLanguage(lcode: string): QueryRef<any> {
 
-        return this.apollo.watchQuery<Language>({
-            query: gql`{
-                languages($code: String){
+        return this.apollo.watchQuery<any>({
+            query: gql`
+            query getCountry($ccode: String){
+                language($code: $ccode){
                     code
                     name
                     native
                   }
             }`,
             variables: {
-                code: lcode
+                "ccode": lcode
             }
         });
     }
@@ -75,6 +76,9 @@ export class Query {
                     native
                     phone
                     currency
+                    languages {
+                        name
+                    }
                    }
              }`
         });

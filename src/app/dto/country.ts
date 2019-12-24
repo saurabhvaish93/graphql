@@ -16,7 +16,7 @@ export class Country {
   this.phone = '';
   this.continent = null;
   this.currency = '';
-  // languages: [Language];
+  this.languages = [new Language()];
   }
 
 }

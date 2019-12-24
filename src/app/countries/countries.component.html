@@ -11,6 +11,7 @@
       <th scope="col" sortable="name" (sort)="onSort($event)">Name</th>
       <th scope="col" sortable="phone" (sort)="onSort($event)">Phone</th>
       <th scope="col" sortable="currency" (sort)="onSort($event)">Currency</th>
+      <th scope="col" sortable="launguage" (sort)="onSort($event)">Launguage</th>
       <th scope="col" sortable="action" (sort)="onSort($event)">Action</th>
     </tr>
   </thead>
@@ -21,6 +22,9 @@
       <td>{{country.name}}</td>
       <td>{{country.phone}}</td>
       <td>{{country.currency}}</td>
+      <td>  <span *ngFor="let language of country.languages" class=" btn btn-sm btn-outline-primary m-1" (click)="openLanguageModal(viewLanguage, language.code)" style="cursor: pointer;" > 
+        {{language.name}} 
+      </span>  </td>
   <td><button class="btn btn-outline-success" (click)="openVerticallyCentered(viewCountry, country.code)" >View</button></td>
     </tr>
   </tbody>
@@ -38,7 +42,6 @@
     </select>
 </div>
 
-jjj   {{oneCountry | json}}
 
 <ng-template #viewCountry let-modal>
   <div class="modal-header bg-info">
@@ -54,6 +57,27 @@ jjj   {{oneCountry | json}}
           <tr><th>Phone</th><td>{{oneCountry.phone}}</td></tr>
           <tr><th>Currency</th><td>{{oneCountry.currency}}</td></tr>
           <tr><th>Action</th><td>{{oneCountry.action}}</td></tr>
+    </table>
+  </div>
+  <div class="modal-footer bg-info">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>
+
+
+<ng-template #viewLanguage let-modal>
+  <div class="modal-header bg-primary">
+    <h4 class="modal-title">Langauge</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <table class="table table-hover table-stripped text-center" >
+      <tr><th>Name</th><td>{{oneLanguage.name}}</td></tr>
+         <tr><th>Code</th><td>{{oneLanguage.code}}</td></tr>
+          <tr><th>Native</th><td>{{oneLanguage.native}}</td></tr>
+         
     </table>
   </div>
   <div class="modal-footer bg-info">
