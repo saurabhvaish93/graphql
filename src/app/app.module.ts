@@ -6,12 +6,15 @@ import { AppComponent } from './app.component';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
 import { CountriesComponent } from './countries/countries.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {Ng2SearchPipeModule} from 'ng2-search-filter';
+import { ContinentComponent } from './continent/continent.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CountriesComponent
+    CountriesComponent,
+    ContinentComponent
   ],
   imports: [
     BrowserModule,
@@ -19,7 +22,9 @@ import { FormsModule } from '@angular/forms';
     GraphQLModule,
     HttpClientModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    Ng2SearchPipeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,3 +1,19 @@
 <div class="container-fluid">
-  <app-countries></app-countries>
+
+  <h2 class="lead text-center">Graphql Example</h2>
+
+  <ngb-tabset>
+    <ngb-tab title="Continent">
+      <ng-template ngbTabContent>
+        <app-continent></app-continent>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Countries">
+      <ng-template ngbTabContent>
+      
+        <app-countries></app-countries>
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+
 </div>

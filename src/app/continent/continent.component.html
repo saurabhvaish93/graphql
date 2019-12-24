@@ -1,0 +1,129 @@
+
+<br>
+
+<div class="row col-4 mx-auto">
+     <input class="form-control ml-2" name="search" placeholder="Search..." type="text" [(ngModel)]="myfilter"/>
+</div>
+<br>
+
+<span *ngIf="loading"> loading ... </span>
+
+<table class="table table-hover table-stripped" *ngIf="!loading">
+<thead>
+  <tr>
+    <th >S.No</th>
+    <th >Code</th>
+    <th >Name</th>
+    <th >Contries</th>
+  </tr>
+</thead>
+<tbody>
+  <tr  *ngFor="let continent of continents  | filter : myfilter ; let i = index">
+    <td>{{i+1}}</td>
+    <td>{{continent.code}}</td>
+    <td>{{continent.name}}</td>
+    <td > <button class="btn btn-ouline-primary" (click)="openContinentModal(viewContinent, continent.code)">View Countries</button></td>
+   
+  </tr>
+</tbody>
+
+</table>
+
+<ng-template #viewContinent let-modal>
+  <div class="modal-header  bg-info">
+    <h4 class="modal-title">Countries</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <table class="table table-hover table-stripped" >
+      <thead>
+        <tr>
+          <th scope="col" >S.No</th>
+          <th scope="col" sortable="code" (sort)="onSort($event)">Code</th>
+          <th scope="col" sortable="name" (sort)="onSort($event)">Name</th>
+          <th scope="col" sortable="phone" (sort)="onSort($event)">Phone</th>
+          <th scope="col" sortable="currency" (sort)="onSort($event)">Currency</th>
+          <th scope="col" sortable="language" (sort)="onSort($event)">Language</th>
+          <th scope="col" sortable="action" (sort)="onSort($event)">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr  *ngFor="let country of countriesArray  | filter : myfilter ; let i = index">
+          <td>{{country.id}}</td>
+          <td>{{country.code}}</td>
+          <td>{{country.name}}</td>
+          <td>{{country.phone}}</td>
+          <td>{{country.currency}}</td>
+          <td>  <span *ngFor="let language of country.languages" class=" btn btn-sm btn-outline-primary m-1" (click)="openLanguageModal(viewLanguage, language.code)" style="cursor: pointer; border: 0" >
+            {{language.name}}
+          </span>  </td>
+      <td><button class="btn btn-outline-success" (click)="openContryModal(viewCountry, country.code)" >View</button></td>
+        </tr>
+      </tbody>
+    
+    </table>
+    
+    <div class="row justify-content-between p-2">
+      <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+      </ngb-pagination>
+    
+      <select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
+        <option [ngValue]="10">10 items per page</option>
+        <option [ngValue]="20">20 items per page</option>
+        <option [ngValue]="30">30 items per page</option>
+      </select>
+    </div>
+    
+  </div>
+  <div class="modal-footer bg-info">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+  </div>
+  </ng-template>
+  
+
+<ng-template #viewCountry let-modal>
+<div class="modal-header bg-info">
+  <h4 class="modal-title">Country</h4>
+  <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <table class="table table-hover table-stripped text-center" >
+    <tr><th>Name</th><td>{{oneCountry.name}}</td></tr>
+       <tr><th>Code</th><td>{{oneCountry.code}}</td></tr>
+        <tr><th>Phone</th><td>{{oneCountry.phone}}</td></tr>
+        <tr><th>Currency</th><td>{{oneCountry.currency}}</td></tr>
+        <tr><th>Language</th><th>  <span *ngFor="let language of oneCountry.languages" class=" btn btn-sm btn-outline-primary m-1"  (click)="openLanguageModal(viewLanguage, language.code)"   style="cursor: pointer; border: 0" >
+          {{language.name}}
+        </span>  </th></tr>
+  </table>
+</div>
+<div class="modal-footer bg-info">
+  <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+</div>
+</ng-template>
+
+
+<ng-template #viewLanguage let-modal>
+<div class="modal-header bg-primary">
+  <h4 class="modal-title">Langauge</h4>
+  <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <table class="table table-hover table-stripped text-center" >
+    <tr><th>Name</th><td>{{oneLanguage.name}}</td></tr>
+       <tr><th>Code</th><td>{{oneLanguage.code}}</td></tr>
+        <tr><th>Native</th><td>{{oneLanguage.native}}</td></tr>
+
+  </table>
+</div>
+<div class="modal-footer bg-info">
+  <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+</div>
+</ng-template>
+

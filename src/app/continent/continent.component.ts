@@ -1,3 +1,4 @@
+import { Continent } from './../dto/continent';
 import { Country } from './../dto/country';
 import { Language } from './../dto/language';
 import { Query } from './../query/query';
@@ -8,22 +9,26 @@ import { DecimalPipe } from '@angular/common';
 import { FormControl } from '@angular/forms';
 
 @Component({
-  selector: 'app-countries',
-  templateUrl: './countries.component.html',
-  encapsulation: ViewEncapsulation.None,
-  styleUrls: ['./countries.component.css'],
+  selector: 'app-continent',
+  templateUrl: './continent.component.html',
+  styleUrls: ['./continent.component.css'],
+  
   providers: [NgbModalConfig, NgbModal, DecimalPipe]
 })
-export class CountriesComponent implements OnInit {
+export class ContinentComponent implements OnInit {
+
+  flag = false;
 
   language: Language[];
 
   closeResult: string;
   oneCountry: Country = new Country();
+  oneContinent: Continent = new Continent();
 
   oneLanguage: Language = new Language();
 
   countries: Country[] = [];
+  continents: Continent[] = [];
   loading = true;
   error: any;
 
@@ -49,19 +54,35 @@ export class CountriesComponent implements OnInit {
   
 
   ngOnInit() {
-    this.getCountries();
+    this.getContinents();
     // this.getCountry();
   }
 
-  getCountries() {
-    return this.query.getCountries().valueChanges.subscribe(result => {
+  toggleContry() {
+      this.flag=!this.flag;
+  }
+
+
+  getContinents(){
+    return this.query.getContinents().valueChanges.subscribe(result => {
       this.error = result.errors;
       this.loading = result.loading;
-      this.countries = result.data.countries; console.log(this.countries);
+      this.continents = result.data.continents; console.log(result.data);
       this.collectionSize = this.countries.length;
 
     });
   }
+
+  // getCountries() {
+  //   return this.query.getCountries().valueChanges.subscribe(result => {
+  //     this.error = result.errors;
+  //     this.loading = result.loading;
+  //     this.countries = result.data.countries; console.log(this.countries);
+  //     this.collectionSize = this.countries.length;
+
+  //   });
+  // }
+
 
   get countriesArray() {
     return this.countries.map((country, i) => ({ id: i + 1, ...country }))
@@ -77,12 +98,32 @@ export class CountriesComponent implements OnInit {
     });
   }
 
+  getContinent(code: string) {
+    return this.query.getContinent(code).valueChanges.subscribe(result => {
+      this.error = result.errors;
+      this.loading = result.loading;
+      this.oneContinent = result.data.continent;
+      this.countries = this.oneContinent.countries;
+      this.collectionSize = this.countries.length;
+
+      console.log(this.oneContinent);
+    });
+  }
+
+
   getLanguage(code: string) {
     return this.query.getLanguage(code).valueChanges.subscribe(result => {
       this.error = result.errors;
       this.loading = result.loading;
       this.oneLanguage = result.data.language;
     });
+  }
+
+
+  openContinentModal(viewContinent, code) {
+    this.getContinent(code);
+    console.log(this.oneContinent);
+    this.modalService.open(viewContinent,  {  size: 'xl'});
   }
 
   openContryModal(viewCountry, code) {
@@ -99,3 +140,4 @@ export class CountriesComponent implements OnInit {
 
 
 }
+
